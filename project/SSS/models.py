@@ -2,8 +2,6 @@ from decimal import Decimal
 
 from django.core.validators import MinValueValidator
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
-
 
 class Contractor(models.Model):
     class ContractorChoices(models.TextChoices):
@@ -12,7 +10,7 @@ class Contractor(models.Model):
 
     type = models.CharField(choices=ContractorChoices.choices)
     name = models.CharField(verbose_name="контрагент", unique=True)
-    phone = PhoneNumberField(null=True, blank=True, verbose_name="номер телефона")
+    phone = models.CharField(null=True, blank=True, verbose_name="номер телефона")
 
     class Meta:
         verbose_name = "Контрагент"
