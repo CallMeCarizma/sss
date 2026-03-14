@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from ninja import Router
 import SSS.models as models
 import SSS.schemas as schemas
+from ninja.errors import HttpError
 
 contractor_router = Router()
 
@@ -24,6 +25,9 @@ def get_contractor(request, id: int):
 
 @contractor_router.post("", response=schemas.ContractorResponseSchema)
 def create_contractor(request, data: schemas.ContractorRequestSchema):
+    if models.Contractor.objects.filter(name=data.name).exists():
+        raise HttpError(409, "Контрагент с таким именем уже существует")
+
     contractor = models.Contractor.objects.create(**data.dict())
     return contractor
 
