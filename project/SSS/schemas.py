@@ -3,9 +3,12 @@ from typing import List, Optional
 from decimal import Decimal
 from ninja import ModelSchema, Schema
 from SSS.models import Contractor, Equipment, Object, ObjectRegistration, Document
+from phonenumber_field.phonenumber import PhoneNumber
 
 
 class ContractorRequestSchema(ModelSchema):
+    phone: PhoneNumber | None = None
+
     class Meta:
         model = Contractor
         fields = ["type", "name", "phone"]
